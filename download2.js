@@ -1,5 +1,5 @@
 var fs = require('fs');
-http = require('http');
+var http = require('http');
 var urlparser = require('url');
 var k = process.binding('constants');
 
