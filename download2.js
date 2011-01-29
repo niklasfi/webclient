@@ -56,7 +56,6 @@ Download.prototype = {
 		});
 	},
 	onNewData: function(chunk,that){
-		that.filestats.bytesRecieved += chunk.length;
 		fs.write(that.fd, chunk, 0, chunk.length, that.filestats.bytesRecieved, function(err, written){
 			that.filestats.bytesWritten += written;
 			if( that.connection.status == that.connection.finished) 
@@ -66,6 +65,7 @@ Download.prototype = {
 				clearInterval(that.timer.timerObject)
 			}
 		});
+		that.filestats.bytesRecieved += chunk.length;
 	},
 	statsTick: function(that){
 		console.log('recieved: ' + that.filestats.bytesRecieved + 'B of '+ that.filestats.filesize + 'B, progress: ' + ( that.filestats.bytesRecieved /that.filestats.filesize*100).toPrecision(4) + '%, download-rate: '
