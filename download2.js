@@ -56,11 +56,11 @@ Download.prototype = {
 		});
 	},
 	onNewData: function(chunk,that){
-		this.filestats.bytesRecieved += chunk.length;
-		fs.write(that.fd, chunk, 0, chunk.length, null, function(err, written){
+		that.filestats.bytesRecieved += chunk.length;
+		fs.write(that.fd, chunk, 0, chunk.length, that.filestats.bytesRecieved, function(err, written){
 			that.filestats.bytesWritten += written;
-			if( (that.filestats.filesize == that.filestats.bytesWritten || that.connection.status == that.connection.finished) 
-				&& that.filestats.bytesWritten == that.filestats.bytesRecieved){
+			if( that.connection.status == that.connection.finished) 
+			  && that.filestats.bytesWritten == that.filestats.bytesRecieved){
 				fs.close(that.fd);
 				console.log('all bytes written');
 				clearInterval(that.timer.timerObject)
